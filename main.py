@@ -1,7 +1,7 @@
 #install numpy
 #install pandas
 #install pytorch
-#install datetime(自己下載whl黨)
+
 # You should not modify this part.
 import torch
 import torch.nn as nn
@@ -31,13 +31,13 @@ def output(path, data):
 
 
 class LSTM(nn.Module):
-        def __init__(self, input_dim, hidden_dim, num_layers, output_dim):  # 2,32,2,24
+        def __init__(self, input_dim, hidden_dim, num_layers, output_dim):  
                 super(LSTM, self).__init__()
-                self.hidden_dim = hidden_dim  # hidden_dim=hidden_layer的output dim(也是1個hidden layer的 LSTM neuron個數)
-                self.num_layers = num_layers  # 幾層hidden layer(不能太多!!)
+                self.hidden_dim = hidden_dim  
+                self.num_layers = num_layers  
                 self.device=torch.device("cuda"if torch.cuda.is_available() else "cpu")
-                self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)#輸出尺寸是(batch,hidden_dim)
-                self.fc = nn.Linear(hidden_dim, output_dim)  # ouput_dim 是指最後要predict的日子是幾天(1!!)
+                self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
+                self.fc = nn.Linear(hidden_dim, output_dim) 
                 self.fc1=nn.Linear(output_dim,2)
                 self.relu=nn.ReLU(inplace=True)
 
@@ -51,34 +51,6 @@ class LSTM(nn.Module):
                 return out2
 
 
-# #data loader(input size[batch,any,2] output=[batch,1,2])
-# from torch.utils.data import Dataset, DataLoader
-# import pandas as pd
-# class TestDataset(Dataset):
-#     def __init__(self,gen_path,con_path):
-#         self.gen_path=gen_path #args.generation
-#         self.con_path=con_path# args.consumption
-#         self.n_samples=1 #7*24=168筆資料
-#         # read csv
-#         generation = pd.read_csv(self.gen_path)
-#         consumption = pd.read_csv(self.con_path)
-#         self.re_x=[]
-#         for i in range(len(generation['time'])):
-#             temp=[]
-#             temp.append(generation[i])
-#             temp.append(consumption[i])
-#             self.re_x.append(temp)
-#         self.re_x=[re_x]
-#     def __getitem__(self, index):
-#         """ Changing list to tensor. """
-#         list_of_tensors = [torch.tensor(np.array(i)) for i in self.re_x[index]]  # self.re_x[index]為list [[gen,con]*168]
-#         self.re_x[index] = torch.stack(list_of_tensors)
-#         # 168*2大小
-#
-#         return self.re_x[index]
-#
-#     def __len__(self):
-#         return self.n_samples  # 1
 
 
 if __name__ == "__main__":
@@ -92,7 +64,7 @@ if __name__ == "__main__":
     input_dim = 2  # 放入 [generation,consumption] 做training #input_dim是指輸入維度
     hidden_dim = 128  # 代表一層hidden layer有128個LSTM neuron
     num_layers = 2  # 2層hidden layer
-    output_dim = 64  # 最後要predict的日子是幾天(predict 1 day 的 open price)#原:24
+    output_dim = 64  
     device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
 
     model = LSTM(input_dim=input_dim, hidden_dim=hidden_dim, output_dim=output_dim, num_layers=num_layers).to(device)
@@ -154,8 +126,7 @@ if __name__ == "__main__":
 
 
     # 輸出output.csv
-    # data = [["2018-01-01 00:00:00", "buy", 2.5, 3],
-    #         ["2018-01-01 01:00:00", "sell", 3, 5]]
+  
     output(args.output, data)
     #torch.cuda.empty()
 
