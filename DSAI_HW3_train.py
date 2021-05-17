@@ -185,7 +185,7 @@ if __name__ == "__main__":
     hidden_dim = 128  # 代表一層hidden layer有128個LSTM neuron
     num_layers = 2  # 2層hidden layer
     output_dim = 64
-    num_epochs = 3
+    num_epochs = 30
 
     device = torch.device('cuda'if torch.cuda.is_available() else "cpu")
 
