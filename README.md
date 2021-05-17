@@ -21,8 +21,9 @@
 用MSELoss和ADAM optimizer Training   
 batch_size=119->model_input_size=119x168x2且 model_output_size=119x1x2   
 因為資料量太大,所以共training 30epoch(每個epoch有 283200/119=2400 batch)且每500個batch做一次validation   
-* 每個epoch紀錄一次epoch_loss,訓練完成後print出來[epoch_num長]array   
-result圖   
+* 每個epoch紀錄一次epoch_loss,訓練完成後print出來[epoch_num長]array  
+ 
+![image](https://github.com/DC07OCT/DSAI_HW3/blob/main/dsai_hw3_training_process/5.png)
 
 # 存模型參數  
 'params.pkl'  
