@@ -6,21 +6,22 @@
 將他們整理在一起得到各時段總和的consumption_0507.csv和generation_0507.csv(有5832筆) 做觀察  
 
 # 用DataLoader包Train資料   
-因為想用每七天的資料predict 下一小時,因此input_size為(7*24)=168筆[generation,consumption]而 output=[generation,consumption]*1   
+因為想用每七天的資料predict 下一小時,因此input_size為(7*24)=168筆[generation,consumption]而 output=[generation,consumption]x1   
 * training dataset 共有50個targets(8個月資料/each)共236x24x50=283200筆training data   
 * input data需要-mean/std   
 
 # Model
-使用LSTM with input_dim = 2   
+使用LSTM with  
+              input_dim = 2   
               hidden_dim = 128  
-              num_layers = 2 
+              num_layers = 2  
               output_dim = 64
  
 # Training and Validation Method  
 用MSELoss和ADAM optimizer Training   
 batch_size=119->model_input_size=119x168x2且 model_output_size=119x1x2   
 因為資料量太大,所以共training 30epoch(每個epoch有 283200/119=2400 batch)且每500個batch做一次validation   
-* 每個epoch紀錄一次epoch_loss,訓練完成後print出來[epoch_num]array   
+* 每個epoch紀錄一次epoch_loss,訓練完成後print出來[epoch_num長]array   
 result圖   
 
 # 存模型參數  
@@ -29,14 +30,15 @@ result圖
 # Test Sample data  
 input_data_size=1x168x2(7天)  
 output_data_size=1x2(1小時)  
-再用input_data[1:]+output_data做下一筆input以此類推得到24hr predicted資料   
+再用input_data[1:]+output_data做下一筆input,input_data[2:]+output_data ..以此類推得到24hr predicted資料   
 
 # 決策
 * 台電=2.53(市場價格的 upper bound)  
 * 數值是觀察平台info.csv資料下的  
 * 整體的下標量不超過缺/多的量  
-* 因為一次最多100筆下標所以一小時分配4個標籤  
+* 因為一次最多100筆下標所以一小時分配4個標籤   
 ˋˋˋpython
+
         #if y_pred[0]==y_pred[1]:#do nothing  
         if y_pred[0]>y_pred[1]: #代表有餘電要賣(generation>consumption)  
             data.append([next_hour,"sell",2.48,round((y_pred[0]-y_pred[1]).tolist()*0.1,2)])  
