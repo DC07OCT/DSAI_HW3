@@ -30,7 +30,7 @@ result圖
 # Test Sample data  
 input_data_size=1x168x2(7天)  
 output_data_size=1x2(1小時)  
-再用input_data[1:]+output_data做下一筆input,input_data[2:]+output_data ..以此類推得到24hr predicted資料   
+再用input_data[1:]+output_data做下一筆input,再下一筆input=input_data[2:]+output_data ..以此類推得到24hr predicted資料   
 
 # 決策
 * 台電=2.53(市場價格的 upper bound)  
