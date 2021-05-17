@@ -1,5 +1,4 @@
 # DSAI_HW3
-#放README, 表格整理, train.py, test.py ,.pkl, requirement.txt 
 # 分析50個household train data 在各時段的consumption 和 generation (資料前處理)
 1.將terget0~target49拿出來看,發現資料最齊全的是有5831筆資料
 2.把target0~49分別generation和consumption,對齊整理兩個表格(缺失值補0)
