@@ -2,7 +2,7 @@
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
-filepath = 'C:/Users/周郁庭/Desktop/DSAI/training_data'
+filepath = '/DSAI/training_data'
 #0~49
 data = pd.read_csv(filepath+'/target'+str(43)+'.csv')#43擁有最完整的time series
 time_series=data['time']
@@ -39,20 +39,13 @@ for i in range(50):
     #print(k)
     if k!= len(data['time']):
         print('Error!')
-    # print(len(temp1))
-    # print(len(temp2))
+
     if i==0:
         generation.append(time_label)#time series標籤
         consumption.append(time_label)#time series標籤
     generation.append(temp1)
     consumption.append(temp2)
-# print(generation[0])
-# print(generation[1])
-#print(generation[40])
-# I=zip(generation[0],generation[1])
-# for i in range(2,len(generation)):
-#     I=zip(I,generation[i])
-#     print(list(I))
+
 I=zip(*generation)
 I1=zip(*consumption)#把資料從by column轉成 by row
 T=list(I)
